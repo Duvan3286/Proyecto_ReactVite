@@ -8,6 +8,9 @@ function MainMenu() {
   const [dateTime, setDateTime] = useState(new Date());
   // Definimos el estado para los archivos seleccionados
   const [files, setFiles] = useState([]);
+  const [userData, setUserData] = useState(JSON.parse(localStorage.getItem('user_data')));
+
+ 
 
   // useEffect para actualizar la fecha y hora cada segundo
   useEffect(() => {
@@ -25,7 +28,10 @@ function MainMenu() {
 
   return (
     // Contenedor principal del menú
+    <React.Fragment>
+    <h1>Bienvenido {userData.name}</h1>
     <div className="mm-container">
+      
       {/* Columna izquierda del menú */}
       <div className="mm-column">
         <form action="/busqueda" method="get"> {/* Formulario para buscar */}
@@ -144,6 +150,7 @@ function MainMenu() {
         </div>
       </div>
     </div>
+   </React.Fragment>
   );
 }
 

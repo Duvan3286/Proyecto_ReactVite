@@ -3,6 +3,8 @@ import LoginForm from './pages/login'; // Importamos el componente LoginForm des
 import PasswordRecoveryForm from './pages/password'; // Importamos el componente PasswordRecoveryForm desde la ruta proporcionada
 import MainMenu from './pages/menu'; // Importamos el componente MainMenu desde la ruta proporcionada
 import { Routes, Route, BrowserRouter } from 'react-router-dom'; // Importamos las utilidades de enrutamiento de React Router
+import RegisterUser from './pages/register_user';
+
 
 function App() {
   return (
@@ -16,6 +18,8 @@ function App() {
         <Route path="/recuperar-contrasena" element={<PasswordRecoveryForm />} />
         {/* Ruta para la página de menú, renderiza el componente MainMenu */}
         <Route path="/menu" element={<MainMenu />} />
+
+        <Route path="/registrar-usuario" element={<RegisterUser/>} />
       </Routes>
     </BrowserRouter>
   );
