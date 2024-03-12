@@ -14,8 +14,8 @@ function RegisterUser() {
     e.preventDefault();
 
     try {
-      const response = await axios.post('http://127.0.0.1:8000/api/registro', {
-        name: username,
+      const response = await axios.post('http://127.0.0.1:8000/api/register_user', {
+        username: username,
         email: email,
         password: password
       });
