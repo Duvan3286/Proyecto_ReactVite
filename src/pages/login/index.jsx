@@ -1,33 +1,81 @@
-import React from 'react'; // Importamos React
-import './LoginForm.css'; // Importamos los estilos CSS
-import logo from '../../assets/logo-softcoinp.jpg'; // Importamos el logo desde la carpeta de activos
+import React, { useState } from 'react'; 
+import './LoginForm.css'; 
+import logo from '../../assets/logo-softcoinp.jpg'; 
+import axios from 'axios'; 
+import { useNavigate } from 'react-router-dom';
 
-// Definimos el componente LoginForm
 function LoginForm() {
+  const [username, setUsername] = useState('');
+  const [password, setPassword] = useState('');
+  const [error, setError] = useState(null);
+  const navigate = useNavigate();
+
+  const handleSubmit = async (e) => {
+   
+    e.preventDefault();
+
+    try {
+      const response = await axios.post('http://127.0.0.1:8000/api/login', {
+        name:name,
+        email:username,
+        password:password
+      });
+
+      // Manejar la respuesta del backend
+      if(response.data.user){
+        localStorage.setItem('user_data', JSON.stringify(response.data.user));
+        navigate('/menu');
+      } else{
+        alert(response.message);
+      }
+
+      // Aquí puedes redirigir al usuario o hacer cualquier otra acción basada en la respuesta del servidor
+       
+    } catch (error) {
+      console.error('Error al iniciar sesión:', error);
+      setError('Usuario o contraseña incorrectos.'); // Manejar errores de autenticación
+    }
+  };
+
   return (
-    // Contenedor principal del formulario de inicio de sesión
     <div className="login-container">
-      <div className="centrado"> {/* Div centrado */}
-        <img src={logo} alt="imagen logo softcoinp" width="250" height="250" /> {/* Mostramos el logo */}
+      <div className="centrado"> 
+        <img src={logo} alt="imagen logo softcoinp" width="250" height="250" /> 
       </div>
-      <form action="/menu"> {/* Formulario de inicio de sesión con acción "/menu" */}
-        <div className="form-group"> {/* Grupo de formulario */}
-          <label htmlFor="username">Nombre de Usuario:</label> {/* Etiqueta para el campo de nombre de usuario */}
-          <input type="text" id="username" name="username" required /> {/* Campo de entrada para el nombre de usuario */}
+      <form onSubmit={handleSubmit}> 
+        <div className="form-group"> 
+          <label htmlFor="username">Nombre de Usuario:</label> 
+          <input 
+            type="text" 
+            id="username" 
+            name="username" 
+            value={username} 
+            onChange={(e) => setUsername(e.target.value)} 
+            required 
+          /> 
         </div>
-        <div className="form-group"> {/* Grupo de formulario */}
-          <label htmlFor="password">Contraseña:</label> {/* Etiqueta para el campo de contraseña */}
-          <input type="password" id="password" name="password" required /> {/* Campo de entrada para la contraseña */}
+        <div className="form-group"> 
+          <label htmlFor="password">Contraseña:</label> 
+          <input 
+            type="password" 
+            id="password" 
+            name="password" 
+            value={password} 
+            onChange={(e) => setPassword(e.target.value)} 
+            required 
+          /> 
         </div>
-        <div className="form-group"> {/* Grupo de formulario */}
-          <input type="submit" value="Iniciar Sesión" /> {/* Botón de enviar para iniciar sesión */}
+        {error && <div className="error">{error}</div>} 
+        <div className="form-group"> 
+          <input type="submit" value="Iniciar Sesión" /> 
         </div>
-        <div className="form-group"> {/* Grupo de formulario */}
-          <a href="/recuperar-contrasena">¿Olvidaste tu contraseña?</a>  {/* Enlace para recuperar la contraseña */}
+        <div className="form-group"> 
+          <a href="/recuperar-contrasena">¿Olvidaste tu contraseña?</a><br></br>
+          <a href="/registrar-usuario">Crear Usuario</a> 
         </div>
       </form>
     </div>
   );
 }
 
-export default LoginForm; // Exportamos el componente LoginForm
+export default LoginForm;
