@@ -3,9 +3,9 @@
 .register-user-form {
     max-width: 400px;
     margin: 0 auto;
-    padding: 20px;
+    padding: 25px;
     border: 1px solid #ccc;
-    border-radius: 5px;
+    border-radius: 10px;
     background-color: #f9f9f9;
   }
   
@@ -27,16 +27,16 @@
   }
   
   .rs-form-group input {
-    width: 100%;
+    width: 90%;
     padding: 8px;
     border: 1px solid #ccc;
     border-radius: 3px;
   }
   
-  button[type="submit"] {
-    width: 100%;
+  .rs-button {
+    width: 90%;
     padding: 10px;
-    background-color: #007bff;
+    background-color: #27ae60;
     border: none;
     border-radius: 3px;
     color: #fff;
@@ -44,9 +44,9 @@
     transition: background-color 0.3s ease;
   }
   
-  button[type="submit"]:hover {
-    background-color: #0056b3;
-  }
+ /* button[type="submit"]:hover {
+    background-color:#fff;
+  }*/
   
   .error-message {
     color: #ff0000;

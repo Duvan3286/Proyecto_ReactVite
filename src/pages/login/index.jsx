@@ -71,7 +71,6 @@ function LoginForm() {
         </div>
         <div className="form-group"> 
           <a href="/recuperar-contrasena">¿Olvidaste tu contraseña?</a><br></br>
-          <a href="/registrar-usuario">Crear Usuario</a> 
         </div>
       </form>
     </div>

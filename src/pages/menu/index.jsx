@@ -74,14 +74,13 @@ function MainMenu() {
   return (
     // Contenedor principal del menú
     <React.Fragment>
-    <h1>Bienvenido {userData.name}</h1>
     <div className="mm-container">
       
       {/* Columna izquierda del menú */}
       <div className="mm-column">
         <form action="/busqueda" method="get"> {/* Formulario para buscar */}
           <input type="text" name="q" placeholder=" Identificación" required /> {/* Campo de búsqueda */}
-          <button type="submit">Buscar</button> {/* Botón de búsqueda */}
+          <button type="submit" class="mm-button">Buscar</button> {/* Botón de búsqueda */}
         </form>
 
         <br />
@@ -100,8 +99,6 @@ function MainMenu() {
             <label htmlFor="lastname">Apellido:</label>
             <input type="text" id="lastname" value={lastname} onChange={(e) => setLastname(e.target.value)} required />
 
-            <label htmlFor="type_person">Tipo de persona:</label>
-            <input type="text" id="type_person" value={typePerson} onChange={(e) => setTypePerson(e.target.value)} required />
 
             <label htmlFor="job">Cargo u Oficio:</label>
             <input type="text" id="job" value={job} onChange={(e) => setJob(e.target.value)} required />
@@ -115,13 +112,21 @@ function MainMenu() {
             <label htmlFor="phone">Telefono:</label>
             <input type="text" id="name" value={phone} onChange={(e) => setPhone(e.target.value)} required />
 
-            <label htmlFor="email">Correo Electronico</label>
+            <label htmlFor="email">Correo Electronico:</label>
             <input type="text" id="name" value={email} onChange={(e) => setEmail(e.target.value)} required />
+
+            <label htmlFor="type_person">Tipo de persona:   </label>
+            <select id="type_person" value={typePerson} onChange={(e) => setTypePerson(e.target.value)} required>
+            <option value="">Selecciona un tipo de persona</option>
+            <option value="1">Empleado</option>
+            <option value="2">Proveedor</option>
+            <option value="3">Visitante</option>
+            </select><br></br>
 
             {/* Campo para ingresar motivo */}
             <label htmlFor="reason">Motivo:</label>
             <textarea id="reason" name="reason" rows="5" cols="55" value={reason} onChange={(e) => setReason(e.target.value)} required />
-            <button type="submit" className="mm-button-2">Guardar Datos</button>
+            <button type="submit" className="mm-button">Guardar Datos</button>
           </div>
         </form>
       </div>
@@ -206,6 +211,10 @@ function MainMenu() {
               <button type="submit" className="mm-button-5">Ingreso administrador</button>
             </form>
           </div>
+        </div>
+        <div className="form-group">
+        <h1>Usuario Administrador<br></br>{userData.name}</h1>
+        <a href="/registrar-usuario"className="link">Crear Nuevo Usuario</a> 
         </div>
       </div>
     </div>

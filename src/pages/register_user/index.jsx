@@ -14,8 +14,8 @@ function RegisterUser() {
     e.preventDefault();
 
     try {
-      const response = await axios.post('http://127.0.0.1:8000/api/register_user', {
-        username: username,
+      const response = await axios.post('http://127.0.0.1:8000/api/registro', {
+        name: username,
         email: email,
         password: password
       });
@@ -48,7 +48,7 @@ function RegisterUser() {
           <label htmlFor="password">Contraseña:</label>
           <input type="password" id="password" value={password} onChange={(e) => setPassword(e.target.value)} required />
         </div>
-        <button type="submit">Registrarse</button>
+        <button type="submit" className="rs-button">Registrarse</button>
       </form>
       {error && <p className="error-message">{error}</p>}
     </div>
