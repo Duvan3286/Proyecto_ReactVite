@@ -1,58 +1,78 @@
-import React, { useState } from 'react';
-import './register-user-form.css';
+import React, { useState, useEffect } from 'react';
 import axios from 'axios';
-import { useNavigate } from 'react-router-dom';
+import './ListUser.css'; 
+function ListUser() {
+    const [usuarios, setUsuarios] = useState([]);
 
-function RegisterUser() {
-  const [username, setUsername] = useState('');
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
-  const [error, setError] = useState(null);
-  const navigate = useNavigate();
+    useEffect(() => {
+        const cargarUsuarios = async () => {
+            try {
+                const response = await axios.get('http://127.0.0.1:8000/api/usuarios');
+                setUsuarios(response.data);
+            } catch (error) {
+                console.error('Error al obtener usuarios:', error);
+            }
+        };
 
-  const handleSubmit = async (e) => {
-    e.preventDefault();
+        cargarUsuarios();
+    }, []);
 
-    try {
-      const response = await axios.post('http://127.0.0.1:8000/api/registro', {
-        name: username,
-        email: email,
-        password: password
-      });
+    const deleteUser = async (id) => {
+        try {
+            const response = await axios.delete(`http://127.0.0.1:8000/api/delete_user/${id}`);
+            if (response.data.success) {
+                
+                console.log('Usuario eliminado correctamente');
+                cargarUsuarios();
+                
+            } else {
+                alert(response.data.message);
+            }
+        } catch (error) {
+            console.error('Error al borrar usuario:', error);
+            alert('Usuario eliminado correctamente.');
+            window.location.reload();
+        }
+    };
 
-      if(response.data.user){
-        localStorage.setItem('user_data', JSON.stringify(response.data.user));
-        navigate('/menu');
-      } else {
-        alert(response.message);
-      }
-    } catch (error) {
-      console.error('Error al registrar usuario:', error);
-      setError('Hubo un problema al registrar el usuario.');
-    }
-  };
+    
 
-  return (
-    <div className="register-user-form">
-      <h2>Registro de Usuario</h2>
-      <form onSubmit={handleSubmit}>
-        <div className="rs-form-group">
-          <label htmlFor="username">Nombre de Usuario:</label>
-          <input type="text" id="username" value={username} onChange={(e) => setUsername(e.target.value)} required />
+
+
+    return (
+        <div className="list-user-container">
+            <br />
+            <h2 className="list-user-header">Lista de Usuarios</h2>
+            <a href="/crear-usuario" className="link2">Crear Nuevo Usuario</a>
+            <table className="list-user-table">
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Nombre</th>
+                        <th>Email</th>
+                        <th>Tipo de usuario</th>
+                        <th>Acciones</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {usuarios.map(usuario => (
+                        <tr key={usuario.id}>
+                            <td>{usuario.id}</td>
+                            <td>{usuario.name}</td>
+                            <td>{usuario.email}</td>
+                            <td>{usuario.type_users_id === 1 ? 'Administrador' : 'Operador'}</td>
+                            <td className="action-buttons">
+                                <button className="delete" onClick={() => deleteUser(usuario.id)}>Eliminar</button>
+                               
+                                <button className="update" onClick={() => handleUpdate(usuario.id)}>Actualizar</button>
+                            
+                            </td>
+                        </tr>
+                    ))}
+                </tbody>
+            </table>
         </div>
-        <div className="rs-form-group">
-          <label htmlFor="email">Correo Electrónico:</label>
-          <input type="email" id="email" value={email} onChange={(e) => setEmail(e.target.value)} required />
-        </div>
-        <div className="rs-form-group">
-          <label htmlFor="password">Contraseña:</label>
-          <input type="password" id="password" value={password} onChange={(e) => setPassword(e.target.value)} required />
-        </div>
-        <button type="submit" className="rs-button">Registrarse</button>
-      </form>
-      {error && <p className="error-message">{error}</p>}
-    </div>
-  );
+    );
 }
 
-export default RegisterUser;
+export default ListUser;

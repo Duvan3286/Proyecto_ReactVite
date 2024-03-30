@@ -7,6 +7,8 @@ import axios from 'axios';
 
 function MainMenu() {
  
+    const [statusButton, setstatusButton] = useState(true);
+    const [id, setId] = useState('');
     const [identification, setIdentification] = useState('');
     const [name, setName] = useState('');
     const [lastname, setLastname] = useState('');
@@ -17,6 +19,7 @@ function MainMenu() {
     const [phone, setPhone] = useState('');
     const [email, setEmail] = useState('');
     const [reason, setReason] = useState('');
+
     const navigate = useNavigate();  
 
   // Definimos el estado para la fecha y hora actual
@@ -24,7 +27,7 @@ function MainMenu() {
   // Definimos el estado para los archivos seleccionados
   const [files, setFiles] = useState([]);
   const [userData, setUserData] = useState(JSON.parse(localStorage.getItem('user_data')));
-
+  const [userType, setuserType] = useState(userData.type_users_id);
  
 
   // useEffect para actualizar la fecha y hora cada segundo
@@ -41,12 +44,51 @@ function MainMenu() {
     setFiles(acceptedFiles);
   };
 
+
+
+  const searchPerson = async () =>{
+
+    const response = await axios.post('http://127.0.0.1:8000/api/search_person', {
+      identification: identification,
+    });
+
+    if(response.data.person){
+      setstatusButton (false);
+      const personData = response.data.person;
+      setId(personData.id);
+      setName(personData.name);
+      setLastname(personData.lastname);
+      setTypePerson(personData.type_person_id);
+      setJob(personData.job);
+      setDestination(personData.destination);
+      setAddress(personData.address);
+      setPhone(personData.phone);
+      setEmail(personData.email);
+      setReason(personData.reason);
+
+    } else {
+      setstatusButton (true);
+      setId('');
+      setName('');
+      setLastname('');
+      setTypePerson('');
+      setJob('');
+      setDestination('');
+      setAddress('');
+      setPhone('');
+      setEmail('');
+      setReason('');
+    
+  }
+}
+
    const handleSubmit = async  (e) => {
 
     e.preventDefault();
 
     try {
       const response = await axios.post('http://127.0.0.1:8000/api/register_person', {
+        id: id,
         identification: identification,
         name: name,
         lastname: lastname,
@@ -61,7 +103,9 @@ function MainMenu() {
       });
 
       if(response.data.person){
-        navigate('/menu');
+      
+        const personData = response.data.person;
+        setId(personData.id);
       } else {
         alert(response.message);
       }
@@ -70,7 +114,33 @@ function MainMenu() {
       setError('Hubo un problema al registrar el usuario.');
     }
 
+    };
+
+    const deletePerson = async () => {
+      try {
+        const response = await axios.delete(`http://127.0.0.1:8000/api/delete_person/${identification}`);
+        if (response.data.success) {
+          setIdentification('');
+          setName('');
+          setLastname('');
+          setTypePerson('');
+          setJob('');
+          setDestination('');
+          setAddress('');
+          setPhone('');
+          setEmail('');
+          setReason('');
+          setStatusButton(true);
+        } else {
+          alert(response.data.message);
+        }
+      } catch (error) {
+        console.error('Error al borrar datos:', error);
+        setError('Hubo un problema al borrar los datos.');
+      }
+
    };
+
   return (
     // Contenedor principal del menú
     <React.Fragment>
@@ -78,10 +148,10 @@ function MainMenu() {
       
       {/* Columna izquierda del menú */}
       <div className="mm-column">
-        <form action="/busqueda" method="get"> {/* Formulario para buscar */}
-          <input type="text" name="q" placeholder=" Identificación" required /> {/* Campo de búsqueda */}
-          <button type="submit" class="mm-button">Buscar</button> {/* Botón de búsqueda */}
-        </form>
+        
+          <input type="text" id="identification" value={identification} onChange={(e) => setIdentification(e.target.value)} required />
+          <button type="button" class="mm-button" onClick={searchPerson}>Buscar</button> 
+       
 
         <br />
         <h2>Datos de ingreso</h2>
@@ -89,9 +159,6 @@ function MainMenu() {
         <form onSubmit={handleSubmit}>
           <div className="mm-form-group">
             {/* Campos para ingresar datos personales */}
-
-            <label htmlFor="identification">Identificacion:</label>
-            <input type="text" id="name" value={identification} onChange={(e) => setIdentification(e.target.value)} required />
 
             <label htmlFor="name">Nombre:</label>
             <input type="text" id="name" value={name} onChange={(e) => setName(e.target.value)} required />
@@ -123,10 +190,13 @@ function MainMenu() {
             <option value="3">Visitante</option>
             </select><br></br>
 
-            {/* Campo para ingresar motivo */}
+          
             <label htmlFor="reason">Motivo:</label>
             <textarea id="reason" name="reason" rows="5" cols="55" value={reason} onChange={(e) => setReason(e.target.value)} required />
-            <button type="submit" className="mm-button">Guardar Datos</button>
+            <button type="submit" className="mm-button">{ id ? 'Editar' : 'Guardar'} Datos</button>
+            {userType == 1 && !statusButton && (
+            <button type="button" className="mm-button" onClick={deletePerson}>Borrar Persona</button>)}
+
           </div>
         </form>
       </div>
@@ -159,10 +229,8 @@ function MainMenu() {
               ))}
             </div>
           </div>
-
-          {/* Subcolumna derecha */}
+        
           <div className="mm-sub-column">
-            {/* Mostrar el logo */}
             <img src={logo} alt="logo de marca" width="120" height="145" style={{ borderRadius: '10px' }} />
           </div>
         </div>
@@ -175,19 +243,12 @@ function MainMenu() {
 
         {/* Contenedor para los botones de crear reportes */}
         <div className="mm-container-4">
-          {/* Formulario para crear reporte de novedad */}
+        {userType == 1 && (
           <form action="crear-reporte-novedad.html" method="post">
             <div className="mm-sub-column">
               <button type="submit" className="mm-button-4"><i className="fas fa-exclamation-triangle fa-3x"></i><br /><br />Crear reporte de novedad</button><br /><br />
             </div>
-          </form>
-
-          {/* Formulario para modificar/crear datos de persona */}
-          <form action="modificar-crear-personas.html" method="post">
-            <div className="mm-sub-column">
-              <button type="submit" className="mm-button-4"><i className="fas fa-address-card fa-3x"></i><br /><br />Modificar/crear datos de persona</button><br /><br />
-            </div>
-          </form>
+          </form>)}
 
           {/* Formulario para mostrar personal registrado */}
           <form action="personal-registrado.html" method="post">
@@ -197,7 +258,7 @@ function MainMenu() {
           </form>
         </div>
 
-        {/* Contenedor para los botones de historial y administrador */}
+        {userType == 1 && (
         <div className="mm-container-5">
           {/* Formulario para ver historial de registros */}
           <div className="mm-sub-column">
@@ -211,11 +272,17 @@ function MainMenu() {
               <button type="submit" className="mm-button-5">Ingreso administrador</button>
             </form>
           </div>
-        </div>
+        </div>)}
+
+        {userType == 1 && (
         <div className="form-group">
         <h1>Usuario Administrador<br></br>{userData.name}</h1>
-        <a href="/registrar-usuario"className="link">Crear Nuevo Usuario</a> 
-        </div>
+        <a href="/registrar-usuario"className="link">Crear Usuario</a> 
+        
+        </div>)}
+
+        {userType == 2 && (
+        <h1>Usuario Operador<br></br>{userData.name}</h1>)}
       </div>
     </div>
    </React.Fragment>
