@@ -1,8 +1,12 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import './ListUser.css'; 
+import RegisterUser from './create';
 function ListUser() {
     const [usuarios, setUsuarios] = useState([]);
+    const [openForm, setOpenForm] = useState(false);
+    const [dataItem, setDataItem] = useState([]);
+
 
     useEffect(() => {
         const cargarUsuarios = async () => {
@@ -16,6 +20,15 @@ function ListUser() {
 
         cargarUsuarios();
     }, []);
+
+    const handleOpenForm = (dataItem)=>{
+        setOpenForm(true);
+        setDataItem(dataItem);
+    }
+
+    const handleCloseForm = ()=>{
+        setOpenForm(false);
+    }
 
     const deleteUser = async (id) => {
         try {
@@ -34,7 +47,7 @@ function ListUser() {
             window.location.reload();
         }
     };
-
+        
     
 
 
@@ -43,7 +56,7 @@ function ListUser() {
         <div className="list-user-container">
             <br />
             <h2 className="list-user-header">Lista de Usuarios</h2>
-            <a href="/crear-usuario" className="link2">Crear Nuevo Usuario</a>
+            <a onClick={() =>handleOpenForm([])} className="link2">Crear Nuevo Usuario</a>
             <table className="list-user-table">
                 <thead>
                     <tr>
@@ -64,13 +77,14 @@ function ListUser() {
                             <td className="action-buttons">
                                 <button className="delete" onClick={() => deleteUser(usuario.id)}>Eliminar</button>
                                
-                                <button className="update" onClick={() => handleUpdate(usuario.id)}>Actualizar</button>
+                                <button className="update" onClick={() => handleOpenForm(usuario)}>Actualizar</button>
                             
                             </td>
                         </tr>
                     ))}
                 </tbody>
             </table>
+            {openForm && <RegisterUser onOpen={true} onClose={handleCloseForm} dataItem={dataItem} setOpenForm={setOpenForm} />}
         </div>
     );
 }

@@ -277,7 +277,7 @@ function MainMenu() {
         {userType == 1 && (
         <div className="form-group">
         <h1>Usuario Administrador<br></br>{userData.name}</h1>
-        <a href="/registrar-usuario"className="link">Crear Usuario</a> 
+        <a href="/registrar-usuario"className="link">Opciones de Usuario</a> 
         
         </div>)}
 
