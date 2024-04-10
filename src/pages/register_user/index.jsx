@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import './ListUser.css'; 
 import RegisterUser from './create';
+
 function ListUser() {
     const [usuarios, setUsuarios] = useState([]);
     const [openForm, setOpenForm] = useState(false);
@@ -75,7 +76,7 @@ function ListUser() {
                             <td>{usuario.email}</td>
                             <td>{usuario.type_users_id === 1 ? 'Administrador' : 'Operador'}</td>
                             <td className="action-buttons">
-                                <button className="delete" onClick={() => deleteUser(usuario.id)}>Eliminar</button>
+                                <button className="delete" onClick={() => deleteUser(usuario.id)}>Eliminar</button><br></br><br></br>
                                
                                 <button className="update" onClick={() => handleOpenForm(usuario)}>Actualizar</button>
                             

@@ -5,7 +5,7 @@ import MainMenu from './pages/menu'; // Importamos el componente MainMenu desde 
 import { Routes, Route, BrowserRouter } from 'react-router-dom'; // Importamos las utilidades de enrutamiento de React Router
 import RegisterUser from './pages/register_user/create';
 import ListUser from './pages/register_user';
-
+import PersonList from './pages/person_list';
 
 function App() {
   return (
@@ -19,7 +19,7 @@ function App() {
         <Route path="/recuperar-contrasena" element={<PasswordRecoveryForm />} />
         {/* Ruta para la página de menú, renderiza el componente MainMenu */}
         <Route path="/menu" element={<MainMenu />} />
-
+        <Route path="/historial-registros" element={<PersonList />} />
         <Route path="/registrar-usuario" element={<ListUser/>} />
         <Route path="/crear-usuario" element={<RegisterUser/>} />
       </Routes>
@@ -27,4 +27,4 @@ function App() {
   );
 }
 
-export default App; // Exportamos el componente App
+export default App; 

@@ -250,28 +250,18 @@ function MainMenu() {
             </div>
           </form>)}
 
-          {/* Formulario para mostrar personal registrado */}
-          <form action="personal-registrado.html" method="post">
-            <div className="mm-sub-column">
-              <button type="submit" className="mm-button-4"><i className="fas fa-users fa-3x"></i><br /><br />Personal registrado</button><br /><br />
-            </div>
-          </form>
         </div>
 
         {userType == 1 && (
         <div className="mm-container-5">
           {/* Formulario para ver historial de registros */}
           <div className="mm-sub-column">
-            <form action="historial-registros.html" method="post">
-              <button type="submit" className="mm-button-5">Historial de registros</button>
-            </form>
+            
+            <a href="/historial-registros"className="link3">Personas Registradas</a> 
+
           </div>
-          {/* Formulario para ingresar como administrador */}
-          <div className="mm-sub-column">
-            <form action="administrador.html" method="post">
-              <button type="submit" className="mm-button-5">Ingreso administrador</button>
-            </form>
-          </div>
+          
+          
         </div>)}
 
         {userType == 1 && (

@@ -194,7 +194,6 @@
         }	
 		.link {
             
-            text-decoration: underline;
             background-color: #1F618D;
             padding: 5px 30px;
             border-radius: 10px;
@@ -202,4 +201,13 @@
             cursor: pointer;
 		  
           }
-          
+          .link3 {
+            
+            background-color: #1F618D;
+            padding: 5px 100px;
+            border-radius: 10px;
+            color: #ffffff;
+            cursor: pointer;
+            font-size: 20px;
+		  
+          }

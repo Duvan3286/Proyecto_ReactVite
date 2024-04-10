@@ -40,6 +40,7 @@
     border: none;
     margin-right: 5px;
     font-weight: bold;
+    padding: 10px 20px;
 }
 
 .list-user-table .action-buttons button.update {
@@ -48,6 +49,7 @@
     border: none;
     margin-right: 5px;
     font-weight: bold;
+    padding: 10px 12px;
 }
 .link2 {
             
