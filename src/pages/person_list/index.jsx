@@ -18,7 +18,7 @@ const PersonList = () => {
   }, []);
 
   return (
-    <div>
+    <div className="pl-container">
       <h1>Personal Registrado</h1>
       <table>
         <thead>

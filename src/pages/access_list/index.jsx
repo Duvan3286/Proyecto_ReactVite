@@ -19,7 +19,7 @@ const AccessList = () => {
 
   console.log(access);
   return (
-    <div>
+    <div className='al-container'>
       <h1>Registro de entradas</h1>
       <table>
         <thead>

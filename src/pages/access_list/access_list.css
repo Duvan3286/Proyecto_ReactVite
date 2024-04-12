@@ -1,0 +1,54 @@
+/* Estilos para el título */
+h1 {
+    font-size: 34px;
+    margin-bottom: 20px;
+    color: #333; /* Color de texto más oscuro */
+}
+
+/* Estilos para la tabla */
+table {
+    width: 80%;
+    
+    margin-top: 20px;
+    margin: 20px auto;
+    font-size: 18px;
+    background-color: #fff;
+    border-radius: 10px;
+    
+}
+
+/* Estilos para las celdas de la tabla */
+th, td {
+    padding: 20px;
+    border: 1px solid #ddd;
+    text-align: left;
+    
+    
+}
+
+/* Estilos para las celdas de encabezado de la tabla */
+th {
+    background-color: #f2f2f2;
+    font-weight: bold;
+    color: #333; /* Color de texto más oscuro */
+    font-size: 24px;
+}
+
+/* Estilos para las filas impares */
+tbody tr::hover {
+    background-color: #f9f9f9;
+}
+
+/* Estilos para las filas pares */
+tbody tr:hover {
+    background-color: #fafafa; /* Cambio ligero en el color de fondo */
+}
+.al-container {
+    width: 100%;
+    margin: 0 auto;
+    padding: 50px;
+    border: 1px solid #908d8d;
+    border-radius: 10px;
+    background-color: #27ae60;
+    h1 {color:#fff};
+}

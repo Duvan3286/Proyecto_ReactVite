@@ -8,10 +8,12 @@ h1 {
 /* Estilos para la tabla */
 table {
     width: 80%;
-    border-collapse: collapse;
+    
     margin-top: 20px;
     margin: 20px auto;
     font-size: 18px;
+    background-color: #fff;
+    border-radius: 10px;
     
 }
 
@@ -20,6 +22,7 @@ th, td {
     padding: 20px;
     border: 1px solid #ddd;
     text-align: left;
+    
     
 }
 
@@ -40,5 +43,12 @@ tbody tr::hover {
 tbody tr:hover {
     background-color: #fafafa; /* Cambio ligero en el color de fondo */
 }
-
-
+.pl-container {
+    width: 100%;
+    margin: 0 auto;
+    padding: 50px;
+    border: 1px solid #908d8d;
+    border-radius: 10px;
+    background-color: #2980B9;
+    h1 {color:#fff};
+}

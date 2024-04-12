@@ -277,14 +277,14 @@ function MainMenu() {
                     </div>
 
                     {/* Contenedor para los botones de crear reportes */}
-                    {userType == 1 && (
+                
                         <div className="mm-container-4">
                             
                             <div className="mm-sub-column">
                                 <a href="/Registro-entradas" className="link3">Registro de entradas</a>
                             </div>
                         </div>
-                    )}
+                
                     
 
                     {userType == 1 && (
