@@ -14,6 +14,11 @@ function LoginForm() {
    
     e.preventDefault();
 
+    if (!username.includes('@')) {
+      setError('Por favor, introduce una dirección de correo electrónico válida.');
+      return;
+    }
+
     try {
       const response = await axios.post('http://127.0.0.1:8000/api/login', {
         name:name,
@@ -44,7 +49,7 @@ function LoginForm() {
       </div>
       <form onSubmit={handleSubmit}> 
         <div className="form-group"> 
-          <label htmlFor="username">Nombre de Usuario:</label> 
+          <label htmlFor="username">Correo electronio:</label> 
           <input 
             type="text" 
             id="username" 

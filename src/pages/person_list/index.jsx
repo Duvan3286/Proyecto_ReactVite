@@ -19,7 +19,7 @@ const PersonList = () => {
 
   return (
     <div>
-      <h1>Personas Registradas</h1>
+      <h1>Personal Registrado</h1>
       <table>
         <thead>
           <tr>

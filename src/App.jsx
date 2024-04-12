@@ -6,6 +6,7 @@ import { Routes, Route, BrowserRouter } from 'react-router-dom'; // Importamos l
 import RegisterUser from './pages/register_user/create';
 import ListUser from './pages/register_user';
 import PersonList from './pages/person_list';
+import AccessList from './pages/access_list';
 
 function App() {
   return (
@@ -19,7 +20,8 @@ function App() {
         <Route path="/recuperar-contrasena" element={<PasswordRecoveryForm />} />
         {/* Ruta para la página de menú, renderiza el componente MainMenu */}
         <Route path="/menu" element={<MainMenu />} />
-        <Route path="/historial-registros" element={<PersonList />} />
+        <Route path="/personal-registrado" element={<PersonList />} />
+        <Route path="/Registro-entradas" element={<AccessList />} />
         <Route path="/registrar-usuario" element={<ListUser/>} />
         <Route path="/crear-usuario" element={<RegisterUser/>} />
       </Routes>
