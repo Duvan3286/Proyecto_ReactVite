@@ -8,6 +8,7 @@ body
     border: 1px solid #908d8d;
     border-radius: 10px;
     background-color: #2980B9;
+    font-size: 25px;
 }
 .centrado { 
     text-align: center 
@@ -40,4 +41,13 @@ body
     background-color: #27ae60;
     color: #fff;
     cursor: pointer;
+    font-size: 20px;
+    font-weight: bold;
+    transition: background-color 0.3s, color 0.3s; 
+}
+
+
+.form-group input[type="submit"]:hover {
+    background-color: white;
+    color: #2ecc71;
 }

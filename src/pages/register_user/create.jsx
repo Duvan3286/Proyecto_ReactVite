@@ -12,21 +12,29 @@ function RegisterUser(props) {
   const [typeUsers, setTypeUsers] = useState('');
   const [error, setError] = useState(null);
   const navigate = useNavigate();
-  const {dataItem, onClose, onOpen, setOpenForm } = props;
-  
- 
+  const { dataItem, onClose, onOpen, setOpenForm } = props;
+
   useEffect(() => {
-    setId (dataItem.id);
-    setUsername (dataItem.name);
-    setEmail (dataItem.email);
-    setTypeUsers(dataItem.type_users_id)
+    setId(dataItem.id);
+    setUsername(dataItem.name);
+    setEmail(dataItem.email);
+    setTypeUsers(dataItem.type_users_id);
   }, [dataItem]);
-
-
-  
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    let passwordError = '';
+
+    // Validar la longitud de la contraseña
+    if (password.length < 6) {
+      passwordError = 'La contraseña debe tener al menos 6 caracteres.';
+    }
+
+    // Si hay un error en la contraseña, establecer el mensaje de error y detener el proceso
+    if (passwordError) {
+      setError(passwordError);
+      return;
+    }
 
     try {
       const response = await axios.post('http://127.0.0.1:8000/api/registro', {
@@ -39,13 +47,11 @@ function RegisterUser(props) {
 
       if (response.data.user) {
         localStorage.setItem('user_data', JSON.stringify(response.data.user));
-        if(response.data.redirect == 1){
+        if (response.data.redirect === 1) {
           navigate('/menu');
-        }else {
-          
+        } else {
           location.reload();
         }
-       
       } else {
         alert(response.message);
       }
@@ -54,8 +60,6 @@ function RegisterUser(props) {
       setError('Hubo un problema al registrar el usuario.');
     }
   };
-
-
 
   return (
     <>
@@ -99,12 +103,7 @@ function RegisterUser(props) {
             </Typography>
           </Box>
         </div>
-
       </Modal>
-
-
-
-
     </>
   );
 }

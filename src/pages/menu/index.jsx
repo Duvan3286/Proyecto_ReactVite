@@ -273,23 +273,24 @@ function MainMenu() {
                     {/* Contenedor para mostrar la fecha y hora */}
                     <div className="mm-container-3" style={{ flexDirection: 'mm-column' }}>
                         <h2>Fecha y hora de ingreso</h2>
-                        <div id="reloj">{dateTime.toLocaleString()}</div>
+                        <div id="reloj" style={{ color: 'orange' }}>{dateTime.toLocaleString()}</div>
                     </div>
 
+
                     {/* Contenedor para los botones de crear reportes */}
-                
-                        <div className="mm-container-4">
-                            
-                            <div className="mm-sub-column">
-                                <a href="/Registro-entradas" className="link3">Registro de entradas</a>
-                            </div>
+
+                    <div className="mm-container-4">
+
+                        <div className="mm-sub-column">
+                            <a href="/Registro-entradas" className="link3">Registro de entradas</a>
                         </div>
-                
-                    
+                    </div>
+
+
 
                     {userType == 1 && (
                         <div className="mm-container-5">
-                            
+
                             <div className="mm-sub-column">
                                 <a href="/personal-registrado" className="link3">Personal registrado</a>
                             </div>
@@ -299,7 +300,7 @@ function MainMenu() {
                     {userType == 1 && (
                         <div className="form-group">
                             <h1>Usuario Administrador<br></br>{userData.name}</h1>
-                            <a href="/registrar-usuario" className="link">Opciones de Usuario</a>
+                            <a href="/registrar-usuario" className="link1">Opciones de Usuario</a>
                         </div>
                     )}
 

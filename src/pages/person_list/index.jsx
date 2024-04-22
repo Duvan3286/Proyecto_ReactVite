@@ -18,20 +18,18 @@ const PersonList = () => {
   }, []);
 
   return (
-    <div className="pl-container">
+    <div className="custom-table-container">
       <h1>Personal Registrado</h1>
-      <table>
+      <table className="custom-table">
         <thead>
           <tr>
-          <th>Documento</th>
+            <th>Documento</th>
             <th>Nombre</th>
             <th>Apellido</th>
             <th>Cargo U Oficio</th>
             <th>Direccion</th>
             <th>Telefono</th>
             <th>Email</th>
-            
-
           </tr>
         </thead>
         <tbody>
@@ -44,13 +42,13 @@ const PersonList = () => {
               <td>{person.address}</td>
               <td>{person.phone}</td>
               <td>{person.email}</td>
-              
             </tr>
           ))}
         </tbody>
       </table>
     </div>
   );
+  
 };
 
 export default PersonList;
