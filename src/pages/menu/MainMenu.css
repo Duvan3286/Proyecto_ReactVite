@@ -141,11 +141,11 @@
             font-size: 18px;
             font-weight: bold;
             background-color:  #27ae60;
-            transition: background-color 0.3s, color 0.3s;
+           
         }
 	    .mm-button:hover {
-            background-color: white; 
-            color: #2ecc71;  
+            background-color:  #34e57a; 
+              
         } 
 
         .mm-button-2 {
@@ -154,12 +154,12 @@
             min-width: 120px;
             font-weight: bold;
             background-color: #27ae60;
-            transition: background-color 0.3s, color 0.3s; 
+             
         }
         
         .mm-button-2:hover {
-            background-color: white; 
-            color: #2ecc71; 
+            background-color: #34e57a; 
+            
         }
         
 		
@@ -220,12 +220,12 @@
             color: #ffffff;
             cursor: pointer;
             font-weight: bold;
-            transition: background-color 0.3s, color 0.3s; 
+             
 		  
           }
           .link1:hover {
-            background-color: white; 
-            color: #1F618D; 
+            background-color: #004080; 
+            
           }
 
           .link3 {
@@ -238,10 +238,19 @@
             font-size: 19px;
             font-weight: bold;
             text-decoration: none;
-            transition: background-color 0.3s, color 0.3s; 
+            
 		  
           }
           .link3:hover {
-            background-color: white; 
-            color: #1F618D; 
+            background-color: #004080; 
+             
           }
+          .delete-button {
+            background-color: #FF5733;
+            color: white; 
+          }
+          .delete-button:hover {
+
+            background-color: #FF0000;
+          }
+          

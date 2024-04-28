@@ -1,10 +1,9 @@
-
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
+import { useTable, usePagination } from 'react-table';
 import './PersonList.css';
 
 const PersonList = () => {
- 
   const [people, setPeople] = useState([]);
 
   useEffect(() => {
@@ -17,38 +16,104 @@ const PersonList = () => {
       });
   }, []);
 
+  const columns = React.useMemo(
+    () => [
+      {
+        Header: 'Documento',
+        accessor: 'identification',
+      },
+      {
+        Header: 'Nombre',
+        accessor: 'name',
+      },
+      {
+        Header: 'Apellido',
+        accessor: 'lastname',
+      },
+      {
+        Header: 'Cargo U Oficio',
+        accessor: 'job',
+      },
+      {
+        Header: 'Direccion',
+        accessor: 'address',
+      },
+      {
+        Header: 'Telefono',
+        accessor: 'phone',
+      },
+      {
+        Header: 'Email',
+        accessor: 'email',
+      },
+    ],
+    []
+  );
+
+  const {
+    getTableProps,
+    getTableBodyProps,
+    headerGroups,
+    page,
+    prepareRow,
+    nextPage,
+    previousPage,
+    canNextPage,
+    canPreviousPage,
+    pageOptions,
+    state: { pageIndex },
+  } = useTable(
+    {
+      columns,
+      data: people,
+      initialState: { pageIndex: 0 },
+    },
+    usePagination
+  );
+
   return (
     <div className="custom-table-container">
       <h1>Personal Registrado</h1>
-      <table className="custom-table">
+      <table className="custom-table" {...getTableProps()}>
         <thead>
-          <tr>
-            <th>Documento</th>
-            <th>Nombre</th>
-            <th>Apellido</th>
-            <th>Cargo U Oficio</th>
-            <th>Direccion</th>
-            <th>Telefono</th>
-            <th>Email</th>
-          </tr>
-        </thead>
-        <tbody>
-          {people.map(person => (
-            <tr key={person.id}>
-              <td>{person.identification}</td>
-              <td>{person.name}</td>
-              <td>{person.lastname}</td>
-              <td>{person.job}</td>
-              <td>{person.address}</td>
-              <td>{person.phone}</td>
-              <td>{person.email}</td>
+          {headerGroups.map(headerGroup => (
+            <tr {...headerGroup.getHeaderGroupProps()}>
+              {headerGroup.headers.map(column => (
+                <th {...column.getHeaderProps()}>{column.render('Header')}</th>
+              ))}
             </tr>
           ))}
+        </thead>
+        <tbody {...getTableBodyProps()}>
+          {page.map(row => {
+            prepareRow(row);
+            return (
+              <tr {...row.getRowProps()}>
+                {row.cells.map(cell => {
+                  return <td {...cell.getCellProps()}>{cell.render('Cell')}</td>;
+                })}
+              </tr>
+            );
+          })}
         </tbody>
       </table>
+      <div>
+      <button className="custom-button-previous1" onClick={() => previousPage()} disabled={!canPreviousPage}>
+  Anterior
+</button>{' '}
+<button className="custom-button-next1" onClick={() => nextPage()} disabled={!canNextPage}>
+  Siguiente
+</button>{' '}
+
+        <span>
+          Página{' '}
+          <strong>
+            {pageIndex + 1} de {pageOptions.length}
+          </strong>{' '}
+        </span>
+      </div>
     </div>
   );
-  
 };
 
 export default PersonList;

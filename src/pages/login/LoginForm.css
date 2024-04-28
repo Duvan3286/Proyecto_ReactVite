@@ -43,11 +43,11 @@ body
     cursor: pointer;
     font-size: 20px;
     font-weight: bold;
-    transition: background-color 0.3s, color 0.3s; 
+   
 }
 
 
 .form-group input[type="submit"]:hover {
-    background-color: white;
-    color: #2ecc71;
+    background-color: #34e57a;
+    
 }

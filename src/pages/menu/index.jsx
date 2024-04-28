@@ -224,7 +224,7 @@ function MainMenu() {
 
                             <button type="submit" className="mm-button">{id ? 'Editar' : 'Guardar'} Datos</button>
                             {userType == 1 && !statusButton && (
-                                <button type="button" className="mm-button" onClick={deletePerson}>Borrar Persona</button>)}
+                                <button type="button" className="mm-button delete-button" onClick={deletePerson}>Borrar Persona</button>)}
                             <hr />
 
                             <label htmlFor="destination">Destino:</label>

@@ -26,4 +26,17 @@
     color: #fff; 
     font-size: 24px;
   }
-  
+  .custom-button-previous1,
+.custom-button-next1 {
+  background-color: #1F618D;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  padding: 8px 16px;
+  cursor: pointer;
+}
+
+.custom-button-previous1:hover,
+.custom-button-next1:hover {
+  background-color: #0080FF;
+}
