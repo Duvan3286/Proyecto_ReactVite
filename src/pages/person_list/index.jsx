@@ -73,16 +73,16 @@ const PersonList = () => {
   );
 
   const exportToExcel = () => {
-    const fileName = 'people_data.xlsx'; // Nombre del archivo Excel
-    const worksheet = XLSX.utils.json_to_sheet(people); // Convierte los datos en formato JSON a una hoja de cálculo Excel
-    const workbook = XLSX.utils.book_new(); // Crea un nuevo libro de Excel
-    XLSX.utils.book_append_sheet(workbook, worksheet, 'Personal'); // Agrega la hoja de cálculo al libro de Excel
-    XLSX.writeFile(workbook, fileName); // Descarga el archivo Excel
+    const fileName = 'Personal Existente.xlsx';
+    const worksheet = XLSX.utils.json_to_sheet(people);
+    const workbook = XLSX.utils.book_new();
+    XLSX.utils.book_append_sheet(workbook, worksheet, 'Personal');
+    XLSX.writeFile(workbook, fileName);
   };
 
   return (
     <div className="custom-table-container1">
-      <h1>Personal Registrado</h1>
+      <h1>Personal Existente</h1>
       <table className="custom-table" {...getTableProps()}>
         <thead>
           {headerGroups.map(headerGroup => (

@@ -35,9 +35,21 @@ const AccessList = () => {
         Header: 'Cargo U Oficio',
         accessor: 'job',
       },
+      
+      {
+        Header: 'Motivo',
+        accessor: 'motivo',
+      },
+
       {
         Header: 'Fecha y hora de ingreso',
         accessor: 'fecha_hora_ingreso',
+      },
+
+      {
+        Header: 'Estado',
+        accessor: 'status',
+        Cell: ({ value }) => (value === 0 ? 'Salida' : 'Entrada'),
       },
     ],
     []
@@ -65,7 +77,7 @@ const AccessList = () => {
   );
 
   const exportToExcel = () => {
-    const fileName = 'access_data.xlsx'; // Nombre del archivo Excel
+    const fileName = 'Registro de entradas.xlsx'; // Nombre del archivo Excel
     const worksheet = XLSX.utils.json_to_sheet(access); // Convierte los datos en formato JSON a una hoja de cálculo Excel
     const workbook = XLSX.utils.book_new(); // Crea un nuevo libro de Excel
     XLSX.utils.book_append_sheet(workbook, worksheet, 'Acceso'); // Agrega la hoja de cálculo al libro de Excel

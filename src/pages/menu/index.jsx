@@ -22,6 +22,8 @@ function MainMenu() {
     const [reason, setReason] = useState('');
     const [motivo, setMotivo] = useState('');
     const [idPuerta, setIdPuerta] = useState('');
+    const [error, setError] = useState('');
+    const [access, setAccess] = useState(null);
     const navigate = useNavigate();
 
     // Definimos el estado para la fecha y hora actual
@@ -75,6 +77,8 @@ function MainMenu() {
             setAddress(personData.address);
             setPhone(personData.phone);
             setEmail(personData.email);
+            setAccess(response.data.access);
+            
         } else {
             setstatusButton(true);
             setId('');
@@ -138,7 +142,7 @@ function MainMenu() {
                 setPhone('');
                 setEmail('');
                 setReason('');
-                setStatusButton(true);
+                setstatusButton(true);
             } else {
                 alert(response.data.message);
             }
@@ -149,13 +153,33 @@ function MainMenu() {
     };
 
     const handlerRegisterAccess = async () => {
+
+
+        if(!access || access.status == 0){
+
+            var errorMessage = '';
+            if(reason == ''){
+                errorMessage += 'Razon Obligatoria\n';
+            }
+            if(destination == ''){
+                errorMessage += 'Destino Obligatoria\n';
+            }
+
+            if(errorMessage != ''){
+                alert(errorMessage);
+                return;
+            }
+        }
+
+      
         try {
             const response = await axios.post(`http://127.0.0.1:8000/api/entrada`, {
                 reason: reason,
                 destination: destination,
-                person_id: id
+                person_id: id,
+                access: access
             });
-            if (response.data.success) {
+            if (response.data.message) {
                 setIdentification('');
                 setName('');
                 setLastname('');
@@ -168,8 +192,9 @@ function MainMenu() {
                 setReason('');
                 setMotivo('');
                 setIdPuerta('');
-
-                setStatusButton(true);
+                setId('');
+                setstatusButton(true);
+                alert(response.data.message);
             } else {
                 alert(response.data.message);
             }
@@ -225,6 +250,8 @@ function MainMenu() {
                             <button type="submit" className="mm-button">{id ? 'Editar' : 'Guardar'} Datos</button>
                             {userType == 1 && !statusButton && (
                                 <button type="button" className="mm-button delete-button" onClick={deletePerson}>Borrar Persona</button>)}
+                            </div>
+                            </form>
                             <hr />
 
                             <label htmlFor="destination">Destino:</label>
@@ -232,8 +259,8 @@ function MainMenu() {
 
                             <label htmlFor="reason">Motivo:</label>
                             <textarea id="reason" name="reason" rows="5" cols="55" value={reason} onChange={(e) => setReason(e.target.value)} required />
-                        </div>
-                    </form>
+                        
+                    
                 </div>
 
                 {/* Columna derecha del menú */}
