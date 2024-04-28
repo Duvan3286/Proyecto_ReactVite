@@ -1,7 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { useTable, usePagination } from 'react-table';
-import './PersonList.css';
+import * as XLSX from 'xlsx'; // Importa la biblioteca para generar archivos Excel
+import './PersonList.css'; // Asegúrate de importar los estilos necesarios
 
 const PersonList = () => {
   const [people, setPeople] = useState([]);
@@ -71,8 +72,16 @@ const PersonList = () => {
     usePagination
   );
 
+  const exportToExcel = () => {
+    const fileName = 'people_data.xlsx'; // Nombre del archivo Excel
+    const worksheet = XLSX.utils.json_to_sheet(people); // Convierte los datos en formato JSON a una hoja de cálculo Excel
+    const workbook = XLSX.utils.book_new(); // Crea un nuevo libro de Excel
+    XLSX.utils.book_append_sheet(workbook, worksheet, 'Personal'); // Agrega la hoja de cálculo al libro de Excel
+    XLSX.writeFile(workbook, fileName); // Descarga el archivo Excel
+  };
+
   return (
-    <div className="custom-table-container">
+    <div className="custom-table-container1">
       <h1>Personal Registrado</h1>
       <table className="custom-table" {...getTableProps()}>
         <thead>
@@ -98,13 +107,13 @@ const PersonList = () => {
         </tbody>
       </table>
       <div>
-      <button className="custom-button-previous1" onClick={() => previousPage()} disabled={!canPreviousPage}>
-  Anterior
-</button>{' '}
-<button className="custom-button-next1" onClick={() => nextPage()} disabled={!canNextPage}>
-  Siguiente
-</button>{' '}
-
+        <button className="export-button-excel" onClick={exportToExcel}>Exportar a Excel</button> {/* Botón para exportar a Excel */}
+        <button className="custom-button-previous1" onClick={() => previousPage()} disabled={!canPreviousPage}>
+          Anterior
+        </button>{' '}
+        <button className="custom-button-next1" onClick={() => nextPage()} disabled={!canNextPage}>
+          Siguiente
+        </button>{' '}
         <span>
           Página{' '}
           <strong>
