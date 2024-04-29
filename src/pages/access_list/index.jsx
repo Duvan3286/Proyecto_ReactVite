@@ -94,7 +94,7 @@ const AccessList = () => {
 
     
     const columnWidths = columns.map(column => ({
-      wch: Math.max(20, ...access.map(row => (row[column.accessor] || '').toString().length))
+      wch: Math.max(25, ...access.map(row => (row[column.accessor] || '').toString().length))
     }));
     worksheet['!cols'] = columnWidths;
 

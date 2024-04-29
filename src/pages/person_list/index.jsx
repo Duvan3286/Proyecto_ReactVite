@@ -47,6 +47,13 @@ const PersonList = () => {
         Header: 'Email',
         accessor: 'email',
       },
+      
+      {
+        Header: 'Tipo de persona',
+        accessor: 'type_person_id',
+        Cell: ({ value }) => (value === 1 ? 'EMPLEADO' : (value === 2 ? 'PROVEEDOR' : (value === 3 ? 'VISITANTE' :''))),
+      },
+
     ],
     []
   );
