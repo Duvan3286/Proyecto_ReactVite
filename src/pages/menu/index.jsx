@@ -269,13 +269,13 @@ function MainMenu() {
                         {/* Subcolumna izquierda */}
                         <div className="mm-sub-column">
                             {/* Botones de entrada y salida */}
-                            <button type="button" className="mm-button-2" onClick={handlerRegisterAccess}>Entrada</button><br></br><br></br>
-                            <button type="button" className="mm-button-2">Salida  </button>
+                            <button type="button" className="mm-button-2" onClick={handlerRegisterAccess}>ENTRADA/SALIDA</button><br></br><br></br>
+                            {/*<button type="button" className="mm-button-2">Salida  </button>*/}
                         </div>
 
                         {/* Subcolumna central */}
                         <div className="mm-sub-column">
-                            {/* Componente Dropzone para cargar archivos */}
+                            {/* Componente Dropzone para cargar archivos 
                             <Dropzone onDrop={handleDrop}>
                                 {({ getRootProps, getInputProps }) => (
                                     <div {...getRootProps()} className="mm-sub-column">
@@ -283,7 +283,7 @@ function MainMenu() {
                                         <button type="mm-button" className="mm-button-3" id="foto-perfil">Foto De Perfil</button>
                                     </div>
                                 )}
-                            </Dropzone>
+                            </Dropzone>*/}
                             {/* Mostrar imágenes seleccionadas */}
                             <div>
                                 {files.map(file => (
@@ -293,7 +293,7 @@ function MainMenu() {
                         </div>
 
                         <div className="mm-sub-column">
-                            <img src={logo} alt="logo de marca" width="120" height="145" style={{ borderRadius: '10px' }} />
+                            <img src={logo} alt="logo de marca" width="135" height="160" style={{ borderRadius: '10px' }} />
                         </div>
                     </div>
 

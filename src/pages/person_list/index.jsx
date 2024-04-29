@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { useTable, usePagination } from 'react-table';
-import * as XLSX from 'xlsx'; // Importa la biblioteca para generar archivos Excel
-import './PersonList.css'; // Asegúrate de importar los estilos necesarios
+import * as XLSX from 'xlsx';
+import './PersonList.css';
 
 const PersonList = () => {
   const [people, setPeople] = useState([]);
@@ -73,10 +73,25 @@ const PersonList = () => {
   );
 
   const exportToExcel = () => {
-    const fileName = 'Personal Existente.xlsx';
-    const worksheet = XLSX.utils.json_to_sheet(people);
+    const fileName = 'Personal_Existente.xlsx';
+
+    // Crear un nuevo libro de Excel
     const workbook = XLSX.utils.book_new();
+
+    // Crear una nueva hoja de cálculo
+    const worksheet = XLSX.utils.aoa_to_sheet([columns.map(column => column.Header), ...people.map(item => columns.map(column => item[column.accessor]))]);
+
+    // Ajustar el ancho de las columnas
+    const columnWidths = columns.map(column => ({
+      wch: Math.max(20, ...people.map(row => (row[column.accessor] || '').toString().length))
+    }));
+
+    worksheet['!cols'] = columnWidths;
+
+    // Añadir la hoja de cálculo al libro
     XLSX.utils.book_append_sheet(workbook, worksheet, 'Personal');
+
+    // Guardar el archivo Excel
     XLSX.writeFile(workbook, fileName);
   };
 
@@ -107,7 +122,7 @@ const PersonList = () => {
         </tbody>
       </table>
       <div>
-        <button className="export-button-excel" onClick={exportToExcel}>Exportar a Excel</button> {/* Botón para exportar a Excel */}
+        <button className="export-button-excel" onClick={exportToExcel}>Exportar a Excel</button>
         <button className="custom-button-previous1" onClick={() => previousPage()} disabled={!canPreviousPage}>
           Anterior
         </button>{' '}

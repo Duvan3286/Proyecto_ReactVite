@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { useTable, usePagination } from 'react-table';
-import * as XLSX from 'xlsx'; // Importa la biblioteca para generar archivos Excel
+import * as XLSX from 'xlsx'; 
 import './access_list.css';
 
 const AccessList = () => {
@@ -20,6 +20,12 @@ const AccessList = () => {
   const columns = React.useMemo(
     () => [
       {
+        Header: 'Estado',
+        accessor: 'status',
+        Cell: ({ value }) => (value === 0 ? 'SALIDA' : 'ENTRADA'),
+      },
+
+      {
         Header: 'Documento',
         accessor: 'identification',
       },
@@ -35,6 +41,11 @@ const AccessList = () => {
         Header: 'Cargo U Oficio',
         accessor: 'job',
       },
+
+      {
+        Header: 'Destino',
+        accessor: 'destination',
+      },
       
       {
         Header: 'Motivo',
@@ -46,14 +57,48 @@ const AccessList = () => {
         accessor: 'fecha_hora_ingreso',
       },
 
-      {
-        Header: 'Estado',
-        accessor: 'status',
-        Cell: ({ value }) => (value === 0 ? 'Salida' : 'Entrada'),
-      },
     ],
     []
   );
+
+  const exportToExcel = () => {
+    const fileName = 'Registro de entradas.xlsx'; 
+
+    // Crear un nuevo libro de Excel
+    const workbook = XLSX.utils.book_new();
+
+    // Crear una nueva hoja de cálculo
+    const worksheet = XLSX.utils.book_new();
+
+    // Añadir encabezados
+    columns.forEach((column, index) => {
+      XLSX.utils.sheet_add_aoa(worksheet, [[column.Header]], {
+        origin: { r: 0, c: index }
+      });
+    });
+
+    // Mapear los datos
+    access.forEach((data, rowIndex) => {
+      columns.forEach((column, columnIndex) => {
+        const value = column.Cell ? column.Cell({ value: data[column.accessor] }) : data[column.accessor];
+        XLSX.utils.sheet_add_aoa(worksheet, [[value]], {
+          origin: { r: rowIndex + 1, c: columnIndex }
+        });
+      });
+    });
+
+    // Ajustar el ancho de las columnas
+    const columnWidths = columns.map(column => ({
+      wch: Math.max(20, ...access.map(row => (row[column.accessor] || '').toString().length))
+    }));
+    worksheet['!cols'] = columnWidths;
+
+    // Añadir la hoja de cálculo al libro
+    XLSX.utils.book_append_sheet(workbook, worksheet, 'Acceso');
+
+    // Guardar el archivo Excel
+    XLSX.writeFile(workbook, fileName); 
+  };
 
   const {
     getTableProps,
@@ -75,14 +120,6 @@ const AccessList = () => {
     },
     usePagination
   );
-
-  const exportToExcel = () => {
-    const fileName = 'Registro de entradas.xlsx'; // Nombre del archivo Excel
-    const worksheet = XLSX.utils.json_to_sheet(access); // Convierte los datos en formato JSON a una hoja de cálculo Excel
-    const workbook = XLSX.utils.book_new(); // Crea un nuevo libro de Excel
-    XLSX.utils.book_append_sheet(workbook, worksheet, 'Acceso'); // Agrega la hoja de cálculo al libro de Excel
-    XLSX.writeFile(workbook, fileName); // Descarga el archivo Excel
-  };
 
   return (
     <div className="access-container">
