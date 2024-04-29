@@ -62,7 +62,7 @@ function MainMenu() {
     };
 
     const searchPerson = async () => {
-        const response = await axios.post('http://127.0.0.1:8000/api/search_person', {
+        const response = await axios.post(`${import.meta.env.VITE_API_URL}/api/search_person`, {
             identification: identification,
         });
 
@@ -101,7 +101,7 @@ function MainMenu() {
         }
 
         try {
-            const response = await axios.post('http://127.0.0.1:8000/api/register_person', {
+            const response = await axios.post(`${import.meta.env.VITE_API_URL}/api/register_person`, {
                 id: id,
                 identification: identification,
                 name: name,
@@ -130,7 +130,7 @@ function MainMenu() {
 
     const deletePerson = async () => {
         try {
-            const response = await axios.delete(`http://127.0.0.1:8000/api/delete_person/${identification}`);
+            const response = await axios.delete(`${import.meta.env.VITE_API_URL}/api/delete_person/${identification}`);
             if (response.data.success) {
                 setIdentification('');
                 setName('');
@@ -173,7 +173,7 @@ function MainMenu() {
 
       
         try {
-            const response = await axios.post(`http://127.0.0.1:8000/api/entrada`, {
+            const response = await axios.post(`${import.meta.env.VITE_API_URL}/api/entrada`, {
                 reason: reason,
                 destination: destination,
                 person_id: id,
@@ -254,10 +254,10 @@ function MainMenu() {
                             </form>
                             <hr />
 
-                            <label htmlFor="destination">Destino:</label>
+                            <label htmlFor="destination"style={{ color: 'white' }}>Destino:</label>
                             <input type="text" id="destination" value={destination} onChange={(e) => setDestination(e.target.value)} required />
 
-                            <label htmlFor="reason">Motivo:</label>
+                            <label htmlFor="reason"style={{ color: 'white' }}>Motivo:</label>
                             <textarea id="reason" name="reason" rows="5" cols="55" value={reason} onChange={(e) => setReason(e.target.value)} required />
                         
                     

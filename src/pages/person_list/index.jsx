@@ -8,7 +8,7 @@ const PersonList = () => {
   const [people, setPeople] = useState([]);
 
   useEffect(() => {
-    axios.get('http://127.0.0.1:8000/api/persons')
+    axios.get(`${import.meta.env.VITE_API_URL}/api/persons`)
       .then(response => {
         setPeople(response.data);
       })

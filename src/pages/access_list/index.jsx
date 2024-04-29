@@ -19,12 +19,7 @@ const AccessList = () => {
 
   const columns = React.useMemo(
     () => [
-      {
-        Header: 'Estado',
-        accessor: 'status',
-        Cell: ({ value }) => (value === 0 ? 'SALIDA' : 'ENTRADA'),
-      },
-
+     
       {
         Header: 'Documento',
         accessor: 'identification',
@@ -53,10 +48,20 @@ const AccessList = () => {
       },
 
       {
-        Header: 'Fecha y hora de ingreso',
-        accessor: 'fecha_hora_ingreso',
+        Header: 'Fecha de ingreso',
+        accessor: 'fecha',
       },
 
+      {
+        Header: 'Hora de ingreso',
+        accessor: 'hora',
+      },
+
+      {
+        Header: 'Estado',
+        accessor: 'status',
+        Cell: ({ value }) => (value === 0 ? 'SALIDA' : 'ENTRADA'),
+      },
     ],
     []
   );
@@ -64,20 +69,20 @@ const AccessList = () => {
   const exportToExcel = () => {
     const fileName = 'Registro de entradas.xlsx'; 
 
-    // Crear un nuevo libro de Excel
+    
     const workbook = XLSX.utils.book_new();
 
-    // Crear una nueva hoja de cálculo
+   
     const worksheet = XLSX.utils.book_new();
 
-    // Añadir encabezados
+   
     columns.forEach((column, index) => {
       XLSX.utils.sheet_add_aoa(worksheet, [[column.Header]], {
         origin: { r: 0, c: index }
       });
     });
 
-    // Mapear los datos
+    
     access.forEach((data, rowIndex) => {
       columns.forEach((column, columnIndex) => {
         const value = column.Cell ? column.Cell({ value: data[column.accessor] }) : data[column.accessor];
@@ -87,16 +92,16 @@ const AccessList = () => {
       });
     });
 
-    // Ajustar el ancho de las columnas
+    
     const columnWidths = columns.map(column => ({
       wch: Math.max(20, ...access.map(row => (row[column.accessor] || '').toString().length))
     }));
     worksheet['!cols'] = columnWidths;
 
-    // Añadir la hoja de cálculo al libro
+    
     XLSX.utils.book_append_sheet(workbook, worksheet, 'Acceso');
 
-    // Guardar el archivo Excel
+    
     XLSX.writeFile(workbook, fileName); 
   };
 

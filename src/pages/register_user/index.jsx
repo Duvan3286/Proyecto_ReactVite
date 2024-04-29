@@ -12,7 +12,7 @@ function ListUser() {
     useEffect(() => {
         const cargarUsuarios = async () => {
             try {
-                const response = await axios.get('http://127.0.0.1:8000/api/usuarios');
+                const response = await axios.get(`${import.meta.env.VITE_API_URL}/api/usuarios`);
                 setUsuarios(response.data);
             } catch (error) {
                 console.error('Error al obtener usuarios:', error);
@@ -33,7 +33,7 @@ function ListUser() {
 
     const deleteUser = async (id) => {
         try {
-            const response = await axios.delete(`http://127.0.0.1:8000/api/delete_user/${id}`);
+            const response = await axios.delete(`${import.meta.env.VITE_API_URL}/api/delete_user/${id}`);
             if (response.data.success) {
                 
                 console.log('Usuario eliminado correctamente');
